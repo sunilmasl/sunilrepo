@@ -1,0 +1,7 @@
+- name: test ping 
+  hosts: all
+  user: ansible
+  become: true
+  tasks:
+  - name: ping module
+    ping
