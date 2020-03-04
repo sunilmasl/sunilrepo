@@ -1,0 +1,51 @@
+- name: install tomcat-9
+  hosts: 172.31.11.144 
+  user: ansible
+  become: true
+  vars:
+   set_java: jre-1.8.0-openjdk
+  gather_facts: true
+  ignore_errors: true
+  tasks:
+  - name: connecting to the machine
+    ping:
+
+  - name: install Java-1.8.0
+    yum:
+     name: java
+     state: installed
+
+  - name: setting default java
+    alternatives:
+      name: java
+      link: /usr/bin/java
+      path: /usr/lib/jvm/{{set_java}}/bin/java
+
+  - name: add group "tomcat"
+    group:
+     name: tomcat
+     state: present
+
+  - name: add user tomcat
+    user:
+     name: tomcat
+     state: present
+     group: tomcat
+     createhome: yes
+
+  - name: download tomcat-9 package
+    get_url:
+      url: http://mirrors.estointernet.in/apache/tomcat/tomcat-10/v10.0.0-M1/bin/apache-tomcat-10.0.0-M1.tar.gz
+      dest: /opt/apache-tomcat-10.0.0-M1
+
+  - name: Unarchive a file that is already on the remote machine
+    unarchive:
+      src: /opt/apache-tomcat-10.0.0-M1
+      dest: /opt/
+      remote_src: yes
+
+  - name: Run Tomcat
+    shell: ./startup.sh
+    args:
+     chdir: /opt/apache-tomcat-10.0.0-M1/bin
+
