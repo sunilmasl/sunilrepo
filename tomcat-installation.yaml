@@ -45,7 +45,5 @@
       remote_src: yes
 
   - name: Run Tomcat
-    shell: ./startup.sh
-    args:
-     chdir: /opt/apache-tomcat-10.0.0-M1/bin
+    shell: nohup /opt/apache-tomcat-10.0.0-M1/bin/startup.sh &
 
