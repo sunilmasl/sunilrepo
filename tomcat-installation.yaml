@@ -36,11 +36,13 @@
   - name: download tomcat-9 package
     get_url:
       url: http://mirrors.estointernet.in/apache/tomcat/tomcat-10/v10.0.0-M1/bin/apache-tomcat-10.0.0-M1.tar.gz
-      dest: /opt/apache-tomcat-10.0.0-M1
+      dest: /opt/
 
   - name: Unarchive a file that is already on the remote machine
-    command: tar -xvzf apache-tomcat-10.0.0-M1.tar.gz
-   
+    unarchive:
+      src: /opt/apache-tomcat-10.0.0-M1.tar.gz
+      dest: /opt/
+      remote_src: yes
 
   - name: Run Tomcat
     shell: ./startup.sh
