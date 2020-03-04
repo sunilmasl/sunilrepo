@@ -20,7 +20,9 @@
       name: java
       link: /usr/bin/java
       path: /usr/lib/jvm/{{set_java}}/bin/java
-
+      
+  - pause: seconds=5
+  
   - name: add group "tomcat"
     group:
      name: tomcat
@@ -37,13 +39,17 @@
     get_url:
       url: http://mirrors.estointernet.in/apache/tomcat/tomcat-10/v10.0.0-M1/bin/apache-tomcat-10.0.0-M1.tar.gz
       dest: /opt/
-
+      
+  - pause: seconds=5
+  
   - name: Unarchive a file that is already on the remote machine
     unarchive:
       src: /opt/apache-tomcat-10.0.0-M1.tar.gz
       dest: /opt/
       remote_src: yes
-
+      
+  - pause: seconds=5
+  
   - name: Run Tomcat
     shell: nohup /opt/apache-tomcat-10.0.0-M1/bin/startup.sh &
 
